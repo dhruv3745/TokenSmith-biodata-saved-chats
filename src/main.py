@@ -10,7 +10,7 @@ from typing import Dict, Optional, List, Tuple, Union, Any
 from rich.live import Live
 from rich.console import Console
 from rich.markdown import Markdown
-
+from saved_chats import *
 from src.config import RAGConfig
 from src.generator import answer, double_answer, dedupe_generated_text
 from src.index_builder import build_index
@@ -309,6 +309,7 @@ def run_chat_session(args: argparse.Namespace, cfg: RAGConfig):
             if not q:
                 continue
             if q.lower() in {"exit", "quit"}:
+                update_saved_chats(chat_history, cfg)  
                 print("Goodbye!")
                 break
             
@@ -342,10 +343,14 @@ def run_chat_session(args: argparse.Namespace, cfg: RAGConfig):
                 chat_history = chat_history[-cfg.max_history_turns * 2:]
 
         except KeyboardInterrupt:
+            
+            update_saved_chats(chat_history, cfg) 
             print("\nGoodbye!")
             break
         except Exception as e:
             print(f"\nAn unexpected error occurred: {e}")
+            if cfg:
+                update_saved_chats(chat_history, cfg) 
             import traceback
             traceback.print_exc()
             break

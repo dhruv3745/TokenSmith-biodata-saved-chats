@@ -18,15 +18,6 @@ def load_saved_chats():
         saved_chats = []
     return saved_chats
 
-def get_system_prompt(mode = None):
-    return textwrap.dedent(f"""
-            You are a comprehensive summarizer. Provide a brief, thorough summary given the recorded conversation.
-            - Explain the main idea and takeaways clearly and concisely
-            - Mention the key concepts the user learned in the conversation
-            - Mention what the user is interested in based on the conversation
-            - Keep your response within 150 words
-            End your reply with {ANSWER_END}.
-        """).strip()
 
 
 def process_chat(chat, cfg):
@@ -39,6 +30,16 @@ def process_chat(chat, cfg):
     Returns:
         dict: The processed chat with 'question' and 'answer' keys.
     """
+    
+    def get_system_prompt(mode = None):
+        return textwrap.dedent(f"""
+                You are a comprehensive summarizer. Provide a brief, thorough summary given the recorded conversation.
+                - Explain the main idea and takeaways clearly and concisely
+                - Mention the key concepts the user learned in the conversation
+                - Mention what the user is interested in based on the conversation
+                - Keep your response within 150 words
+                End your reply with {ANSWER_END}.
+            """).strip()
     result = run_llama_cpp(chat, cfg.gen_model, max_tokens=cfg.hyde_max_tokens)
     return result["choices"][0]["text"].strip()
 
