@@ -10,14 +10,14 @@ from typing import Dict, Optional, List, Tuple, Union, Any
 from rich.live import Live
 from rich.console import Console
 from rich.markdown import Markdown
-from saved_chats import *
+from src.saved_chats_biodata import saved_chats
 from src.config import RAGConfig
 from src.generator import answer, double_answer, dedupe_generated_text
 from src.index_builder import build_index
 from src.instrumentation.logging import get_logger
 from src.ranking.ranker import EnsembleRanker
 from src.preprocessing.chunking import DocumentChunker
-from src.query_enhancement import generate_hypothetical_document, contextualize_query
+from src.query_enhancement import generate_hypothetical_document, contextualize_query, enhance_query_with_chat_history, personalize_query
 from src.retriever import (
     filter_retrieved_chunks, 
     BM25Retriever, 
@@ -309,7 +309,7 @@ def run_chat_session(args: argparse.Namespace, cfg: RAGConfig):
             if not q:
                 continue
             if q.lower() in {"exit", "quit"}:
-                update_saved_chats(chat_history, cfg)  
+                saved_chats.update_saved_chats(chat_history, cfg)  
                 print("Goodbye!")
                 break
             
@@ -325,6 +325,22 @@ def run_chat_session(args: argparse.Namespace, cfg: RAGConfig):
                 except Exception as e:
                     print(f"Warning: Failed to contextualize query: {e}. Using original query.")
                     effective_q = q
+                    
+                try:
+                    effective_q = enhance_query_with_chat_history(
+                        effective_q,
+                        cfg.gen_model
+                    )
+                except Exception:
+                    pass
+
+                try:
+                    effective_q = personalize_query(
+                        effective_q,
+                        cfg.gen_model
+                    )
+                except Exception:
+                    pass
             
             # Use the single query function. get_answer also renders the streaming markdown and takes care of logging, so we need not do anything else here.
             ans = get_answer(effective_q, cfg, args, logger, console, artifacts=artifacts, additional_log_info=additional_log_info)

@@ -8,19 +8,14 @@ import re
 import sys
 from pathlib import Path
 
-# ---------------------------------------------------------------------------
-# Llama binary / model discovery  (mirrors detect_llama.py pattern)
-# ---------------------------------------------------------------------------
 
 def find_llama_model_path() -> str:
     """Resolve the generation model path for llama_cpp."""
-    # 1. Explicit env var
     if env_path := os.getenv("LLAMA_CPP_MODEL"):
         if Path(env_path).exists():
             print(f"Found model via LLAMA_CPP_MODEL: {env_path}")
             return env_path
 
-    # 2. Path written by build / detect scripts
     llama_path_file = Path("src/llama_path.txt")
     if llama_path_file.exists():
         candidate = llama_path_file.read_text().strip()
@@ -28,7 +23,6 @@ def find_llama_model_path() -> str:
             print(f"Found model path from src/llama_path.txt: {candidate}")
             return candidate
 
-    # 3. Common locations
     common = [
         Path("models") / "model.gguf",
         Path("build") / "model.gguf",
@@ -57,9 +51,6 @@ def load_llama_model(model_path: str):
         return Llama(model_path=model_path, n_ctx=4096, verbose=False)
 
 
-# ---------------------------------------------------------------------------
-# Prompt / generation helpers  (mirrors generator.py pattern)
-# ---------------------------------------------------------------------------
 
 ANSWER_START = "<<<ANSWER>>>"
 ANSWER_END   = "<<<END>>>"
@@ -116,14 +107,10 @@ def ask(model, biodata_raw: str, question: str, max_tokens: int = 512) -> str:
     return extract_answer(raw)
 
 
-# ---------------------------------------------------------------------------
-# Main
-# ---------------------------------------------------------------------------
 
 def main():
     project_root = Path(__file__).resolve().parent
 
-    # --- Locate biodata_raw.txt ---
     biodata_raw_path = project_root / "biodata_raw.txt"
     if not biodata_raw_path.exists():
         print(f"ERROR: biodata_raw.txt not found at {biodata_raw_path}")
@@ -136,7 +123,6 @@ def main():
 
     print(f"Loaded biodata_raw.txt ({len(biodata_raw)} chars)")
 
-    # --- Locate and load model ---
     model_path = find_llama_model_path()
     if not model_path:
         print("ERROR: No model found. Set LLAMA_CPP_MODEL or populate src/llama_path.txt.")
@@ -144,13 +130,11 @@ def main():
 
     model = load_llama_model(model_path)
 
-    # --- Ask each question ---
     results = {}
     for label, question in QUESTIONS:
         print(f"  Asking: {label}...")
         results[label] = ask(model, biodata_raw, question)
 
-    # --- Write biodata.md ---
     biodata_md_path = project_root / "biodata.md"
     with open(biodata_md_path, "w", encoding="utf-8") as f:
         f.write("# Student Biodata\n\n")

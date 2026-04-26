@@ -1,5 +1,5 @@
 import textwrap, re
-from llama_cpp import Llama
+from llama_cpp import Llama, LlamaRAMCache
 
 ANSWER_START = "<<<ANSWER>>>"
 ANSWER_END   = "<<<END>>>"

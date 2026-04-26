@@ -22,7 +22,11 @@ if [[ ! -f "$BIODATA_RAW" ]]; then
 fi
 
 # --- Collect all readable files in biodata_files ---
-mapfile -t BIODATA_FILES < <(find "$BIODATA_DIR" -maxdepth 1 -type f | sort)
+BIODATA_FILES=()
+while IFS= read -r file; do
+  BIODATA_FILES+=("$file")
+done < <(find "$BIODATA_DIR" -maxdepth 1 -type f | sort)
+
 
 if [[ ${#BIODATA_FILES[@]} -eq 0 ]]; then
   log "Warning: biodata_files directory is empty — nothing to process."
