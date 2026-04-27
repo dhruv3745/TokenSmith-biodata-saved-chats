@@ -24,8 +24,6 @@ update-env:
 	@echo "Updating TokenSmith conda environment..."
 	conda env update -f environment.yml -n tokensmith
 
-echo "Bash version: $BASH_VERSION"
-
 # Build llama.cpp if needed
 build-llama:
 	@echo "Checking for existing llama.cpp installation..."
@@ -36,7 +34,7 @@ create-biodata:
 	conda run -n tokensmith bash scripts/biodata.sh
 	@echo "Biodata raw file created at biodata_raw.txt"
 	@echo "Creating biodata files"
-	conda run -n tokensmith python scripts/biodata.py ||
+	conda run -n tokensmith python scripts/biodata.py
 
 
 

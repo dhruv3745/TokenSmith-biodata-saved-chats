@@ -80,9 +80,9 @@ def update_biodata_skills(
     _format_chat_summaries().
     """
     current_skills = load_biodata_section(biodata_path, "SKILLS")
-    if not current_skills:
-        print("No existing SKILLS section found in biodata.md — skipping update.")
-        return
+    # if not current_skills:
+    #     print("No existing SKILLS section found in biodata.md — skipping update.")
+    #     return
 
     if not new_chat:
         print("No chat data provided — skipping skill update.")
@@ -99,13 +99,15 @@ def update_biodata_skills(
         discussed, their learning progress, and any struggles or breakthroughs.
 
         Rules:
-        - Only upgrade a skill if multiple sessions show confident engagement with that concept.
-        - Add new skills only if they are clearly evidenced across at least 2 sessions.
+        - Only upgrade a skill if the session shows confident engagement with that concept or a significant focus on it.
+        - Any new skills added should have a low proficiency level (1-4).
         - Note weaknesses or gaps if learning_progress shows repeated confusion.
         - Do NOT invent skills that aren't evidenced in the session history.
         - Output ONLY the updated SKILLS section content — no headers, no explanation.
         - Preserve existing skills that are not contradicted by the chat history.
         - Format as a clear, readable bullet list.
+        
+        Format of the skills are one per line "skill : level". Level is a scale between 1-10 of proficiency, or "unknown" if not enough information.
         <|im_end|>
         <|im_start|>user
         Current SKILLS section:

@@ -9,31 +9,6 @@ import sys
 from pathlib import Path
 
 
-def find_llama_model_path() -> str:
-    """Resolve the generation model path for llama_cpp."""
-    if env_path := os.getenv("LLAMA_CPP_MODEL"):
-        if Path(env_path).exists():
-            print(f"Found model via LLAMA_CPP_MODEL: {env_path}")
-            return env_path
-
-    llama_path_file = Path("src/llama_path.txt")
-    if llama_path_file.exists():
-        candidate = llama_path_file.read_text().strip()
-        if candidate and Path(candidate).exists():
-            print(f"Found model path from src/llama_path.txt: {candidate}")
-            return candidate
-
-    common = [
-        Path("models") / "model.gguf",
-        Path("build") / "model.gguf",
-        Path.home() / ".cache" / "llama" / "model.gguf",
-    ]
-    for p in common:
-        if p.exists():
-            print(f"Found model at: {p}")
-            return str(p)
-
-    return None
 
 
 def load_llama_model(model_path: str):
@@ -57,7 +32,7 @@ ANSWER_END   = "<<<END>>>"
 
 QUESTIONS = [
     ("OCCUPATION",   "What is the student's occupation?"),
-    ("SKILLS",       "What are the student's current skills and proficiencies? If unknown, state unknown."),
+    ("SKILLS",       "What are the student's current skills and proficiencies? If unknown, state unknown.         Format of the skills are one per line 'skill : level'. Level is a scale between 1-10 of proficiency, or 'unknown' if not enough information."),
     ("CLASSES",      "What relevant classes has the student taken and what information would be covered in each class?"),
     ("TEST_SCORES",  "If the student has mentioned any recent test scores, note the score and any relevant notes. If none, state none."),
     ("INTERESTS",    "What are the basic personal information and interests of the student?"),
@@ -66,7 +41,7 @@ QUESTIONS = [
 SYSTEM_PROMPT = f"""You are a student profile extractor.
 You will be given raw notes about a student and a single question.
 Answer using ONLY the information present in the notes.
-If the answer is not present, clearly say so.
+If the answer is not present, clearly say so. NEVER create information not present in the notes.
 Begin your answer with {ANSWER_START} and end it with {ANSWER_END}.
 Do not include anything outside those markers."""
 
@@ -109,24 +84,28 @@ def ask(model, biodata_raw: str, question: str, max_tokens: int = 512) -> str:
 
 
 def main():
-    project_root = Path(__file__).resolve().parent
+    project_root = Path(__file__).resolve().parent.parent
 
     biodata_raw_path = project_root / "biodata_raw.txt"
     if not biodata_raw_path.exists():
         print(f"ERROR: biodata_raw.txt not found at {biodata_raw_path}")
         sys.exit(1)
-
+    biodata_md_path = project_root / "biodata.md"
     biodata_raw = biodata_raw_path.read_text(encoding="utf-8").strip()
     if not biodata_raw:
-        print("ERROR: biodata_raw.txt is empty — nothing to process.")
-        sys.exit(1)
+        print("Biodata_raw.txt is empty — nothing to process.")
+        with open(biodata_md_path, "w", encoding="utf-8") as f:
+            f.write("# Student Biodata\n\n")
+            for label, _ in QUESTIONS:
+                f.write(f"## {label}\n\n")
+                f.write("")
+                f.write("\n\n")
+        print(f"\nbiodata.md written to: {biodata_md_path}")
+        return
 
     print(f"Loaded biodata_raw.txt ({len(biodata_raw)} chars)")
 
-    model_path = find_llama_model_path()
-    if not model_path:
-        print("ERROR: No model found. Set LLAMA_CPP_MODEL or populate src/llama_path.txt.")
-        sys.exit(1)
+    model_path = str(project_root / "models/qwen2.5-1.5b-instruct-q5_k_m.gguf")
 
     model = load_llama_model(model_path)
 
@@ -135,7 +114,7 @@ def main():
         print(f"  Asking: {label}...")
         results[label] = ask(model, biodata_raw, question)
 
-    biodata_md_path = project_root / "biodata.md"
+    
     with open(biodata_md_path, "w", encoding="utf-8") as f:
         f.write("# Student Biodata\n\n")
         for label, _ in QUESTIONS:

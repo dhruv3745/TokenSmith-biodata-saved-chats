@@ -360,13 +360,13 @@ def run_chat_session(args: argparse.Namespace, cfg: RAGConfig):
 
         except KeyboardInterrupt:
             
-            update_saved_chats(chat_history, cfg) 
+            saved_chats.update_saved_chats(chat_history, cfg) 
             print("\nGoodbye!")
             break
         except Exception as e:
             print(f"\nAn unexpected error occurred: {e}")
             if cfg:
-                update_saved_chats(chat_history, cfg) 
+                saved_chats.update_saved_chats(chat_history, cfg) 
             import traceback
             traceback.print_exc()
             break
