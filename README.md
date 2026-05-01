@@ -1,3 +1,19 @@
+#Personalization Improvement Changes for TAs:
+
+Saved Chats: 
+- Code: src/saved_chats_biodata/saved_chats.py, src/query_enhancement.py, src/main.py, src/update_biodata.py, config.yaml
+- Data_files: saved_chats.json
+Biodata:
+- Code: scripts/biodata.py, scripts/biodata.sh, scripts/setup_env.sh, src/query_enhancement.py, src/main.py, src/saved_chats_biodata/update_biodata.py, config.yaml
+- Data_files: biodata.md, biodata_raw.txt, biodata_files/,
+
+Analysis Information:
+- personalization_data_analysis folder
+ - Biodata_data contains all biodata files and responses for experiment
+ - biodata_eval.py contains the evaluation script
+ - Chat_history contains all saved_chats json files and responses for experiment
+ - saved_chats_eval.py contains the evaluation script
+
 # TokenSmith
 
 **TokenSmith** is a local-first database system for students to query textbooks, lecture slides, and notes and get fast, cited answers on their own machines using local LLMs. It is based on retrieval augmented generation (RAG) and applies database-inspired principles like indexing, latency-focused querying, caching, and incremental builds, to optimize the ingestion -> retrieval -> generation pipeline.
