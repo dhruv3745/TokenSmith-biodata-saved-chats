@@ -1,0 +1,23 @@
+
+The optimizer decides between an index range scan and a full table scan for a query on a billion-row table with a moderately selective condition
+by considering the following factors:                                                                                                           
+
+  1 Index Size and Cost: The optimizer evaluates the size and cost of the index. If the index is large and the cost of scanning it is high, an  
+    index range scan might be more efficient.                                                                                                   
+  2 Query Selectivity: The optimizer assesses the selectivity of the query. If the query is moderately selective, meaning that only a small     
+    fraction of the rows in the table are relevant, an index range scan might be more cost-effective.                                           
+  3 Index Usage: The optimizer considers whether the index is being used in the query. If the index is not being used, an index range scan might
+    be more efficient.                                                                                                                          
+  4 Cost of Full Table Scan: The optimizer estimates the cost of scanning the entire table. If the cost of scanning the table is high, an index 
+    range scan might be more cost-effective.                                                                                                    
+  5 Index Maintenance: The optimizer considers the maintenance cost of the index. If the index is frequently updated, an index range scan might 
+    be more efficient.                                                                                                                          
+  6 Query Execution Time: The optimizer estimates the execution time of the query. If the query execution time is high, an index range scan     
+    might be more efficient.                                                                                                                    
+  7 Query Execution Plan: The optimizer considers the query execution plan. If the plan is likely to be inefficient, an index range scan might  
+    be more efficient.                                                                                                                          
+  8 Index Tuning: The optimizer considers the index tuning options. If the index tuning options are available, the optimizer might choose a     
+    different index or a different index tuning option.                                                                                         
+  9 Query Execution Mode: The optimizer considers the query execution mode. If the query is being executed in a mode that is likely to be       
+    inefficient, an index range scan might be more efficient.                                                                                   
+ 10 Query Execution Time: The optimizer considers the query execution time. If the query execution time is high,      

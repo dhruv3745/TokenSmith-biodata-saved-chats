@@ -1,0 +1,11 @@
+A hash join is a method used in database optimization to join two large tables by comparing the values of a common column. It works by creating 
+a hash table for each table, where the hash table contains the key-value pairs of the common column. Then, the hash tables are compared to find 
+matching keys, and the corresponding values are retrieved from the original tables. This method is efficient when the tables are large and the  
+common column is unique. A query optimizer would prefer a hash join over a nested-loop join or a sort-merge join when the tables are large and  
+the common column is unique. In a nested-loop join, the optimizer would prefer a hash join if the tables are large and the common column is     
+unique. This is because a nested-loop join requires scanning both tables, which can be time-consuming for large tables. A hash join, on the     
+other hand, only requires scanning one table, which is much faster. A sort-merge join is preferred when the tables are large and the common     
+column is not unique. In this method, the tables are sorted based on the common column, and then the sorted tables are merged to find matching  
+keys. This method is less efficient than a hash join because it requires sorting both tables, which can be time-consuming for large tables. In  
+summary, a hash join is preferred when the tables are large and the common column is unique, while a nested-loop join or a sort-merge join is   
+preferred when the tables are large and the common column is not unique.   

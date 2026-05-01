@@ -1,0 +1,11 @@
+# Stduent Biodata
+
+## OCCUPATION
+
+## SKILLS
+
+## CLASSES
+
+## TEST SCORES
+
+## INTERESTS

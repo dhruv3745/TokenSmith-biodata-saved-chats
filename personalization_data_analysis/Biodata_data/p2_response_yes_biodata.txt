@@ -1,0 +1,22 @@
+The hash join is a method of joining two relations, where one relation is partitioned into smaller pieces and the other relation is scanned to  
+find matching tuples. This technique is preferred over nested-loop and sort-merge joins for several reasons:                                    
+
+  1 Efficiency: Hash join can significantly reduce the amount of data that needs to be scanned, especially when the relations are large. By     
+    partitioning the build relation into smaller pieces, the join can be performed more efficiently.                                            
+  2 Scalability: Hash join can handle large datasets more effectively than nested-loop and sort-merge joins. It can scale better as the size of 
+    the relations increases.                                                                                                                    
+  3 Parallelism: Hash join can be parallelized more easily than nested-loop and sort-merge joins. This makes it a good choice for large-scale   
+    data processing and optimization problems.                                                                                                  
+  4 Memory Usage: Hash join can use less memory than nested-loop and sort-merge joins, especially when the relations are partitioned into       
+    smaller pieces.                                                                                                                             
+  5 Scalability: Hash join can handle large datasets more effectively than nested-loop and sort-merge joins. It can scale better as the size of 
+    the relations increases.                                                                                                                    
+  6 Scalability: Hash join can handle large datasets more effectively than nested-loop and sort-merge joins. It can scale better as the size of 
+    the relations increases.                                                                                                                    
+  7 Scalability: Hash join can handle large datasets more effectively than nested-loop and sort-merge joins. It can scale better as the size of 
+    the relations increases.                                                                                                                    
+  8 Scalability: Hash join can handle large datasets more effectively than nested-loop and sort-merge joins. It can scale better as the size of 
+    the relations increases.                                                                                                                    
+  9 Scalability: Hash join can handle large datasets more effectively than nested-loop and sort-merge joins. It can scale better as the size of 
+    the relations increases.                                                                                                                    
+ 10 Scalability: Hash join can handle large datasets more effectively than nested-loop and sort 

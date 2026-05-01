@@ -1,0 +1,23 @@
+A hash join works by partitioning both input relations into smaller pieces such that each partition of the smaller relation fits into memory.   
+The tuples in the partition of the build relation are retained in memory, and an in-memory index is built on these tuples. When the probe       
+relation tuples arrive at the node, they are also repartitioned; tuples in the partition are used directly to probe the index on the tuples in  
+the partition, instead of being written out to disk and read back in.                                                                           
+
+A query optimizer would prefer a hash join over a nested-loop join or a sort-merge join when the following conditions are met:                  
+
+  1 The join condition is an equi-join (e.g., r ⋈ r,A=s,B s); the relations r and s are partitioned by the same partitioning function on their  
+    join attributes.                                                                                                                            
+  2 The relations r and s are already partitioned on the join attributes (by either hash partitioning or range partitioning).                   
+  3 The tuples need to be repartitioned.                                                                                                        
+  4 The tuples are not partitioned or are partitioned on attributes other than the join attributes.                                             
+  5 The tuples need to be repartitioned.                                                                                                        
+  6 The tuples are not partitioned or are partitioned on attributes other than the join attributes.                                             
+  7 The tuples need to be repartitioned.                                                                                                        
+  8 The tuples are not partitioned or are partitioned on attributes other than the join attributes.                                             
+  9 The tuples need to be repartitioned.                                                                                                        
+ 10 The tuples are not partitioned or are partitioned on attributes other than the join attributes.                                             
+ 11 The tuples need to be repartitioned.                                                                                                        
+ 12 The tuples are not partitioned or are partitioned on attributes other than the join attributes.                                             
+ 13 The tuples need to be repartitioned.                                                                                                        
+ 14 The tuples are not partitioned or are partitioned on attributes other than the join attributes.                                             
+ 15 The tuples need to be rep 

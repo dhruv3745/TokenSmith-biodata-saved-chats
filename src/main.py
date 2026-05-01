@@ -1,5 +1,6 @@
 # noinspection PyUnresolvedReferences
 import faiss  # force single OpenMP init
+import time
 
 import argparse
 import json
@@ -300,6 +301,15 @@ def run_chat_session(args: argparse.Namespace, cfg: RAGConfig):
 
     chat_history = []
     additional_log_info = {}
+    
+    try:
+        recovered = saved_chats.recover_last_unsaved_chat(cfg)
+        if recovered:
+            exchanges = len(recovered) // 2
+            print(f"Recovered and summarized {exchanges} unsaved exchange(s) from a previous session.")
+    except Exception as e:
+        print(f"Warning: Failed to recover previous chat session: {e}")
+    
     print("Initialization complete. You can start asking questions!")
     print("Type 'exit' or 'quit' to end the session.")
     while True:
@@ -325,21 +335,43 @@ def run_chat_session(args: argparse.Namespace, cfg: RAGConfig):
                 except Exception as e:
                     print(f"Warning: Failed to contextualize query: {e}. Using original query.")
                     effective_q = q
-                    
+            if cfg.enable_history_personalization:
+                print("Attempting to personalize query based on chat history...") 
                 try:
+                    start = time.time()
+                    old_eq = effective_q
                     effective_q = enhance_query_with_chat_history(
                         effective_q,
                         cfg.gen_model
                     )
+                    if effective_q != old_eq:
+                        print(f"Personalized Query: {effective_q}")  # Debug print to trace chat history personalization
+                    else:
+                        print("No personalization changes made to the query from chat history.")
+                    end = time.time()
+                    print(f"\n\n\nChat history personalization took {end - start:.2f} seconds.\n\n\n")
                 except Exception:
+                    print("Warning: Failed to enhance query with chat history personalization.")
                     pass
-
+            if cfg.enable_biodata_personalization:
+                start = time.time()
+                print("Attempting to personalize query based on biodata...")
                 try:
+                    old_eq = effective_q
                     effective_q = personalize_query(
                         effective_q,
                         cfg.gen_model
                     )
-                except Exception:
+                    if effective_q != old_eq:
+                    
+                        print(f"Personalized Query: {effective_q}")  # Debug print to trace biodata personalization
+                    else:
+                        print("No personalization changes made to the query from biodata.")
+                    end = time.time()
+                    print(f"\n\n\nBiodata personalization took {end - start:.2f} seconds.\n\n\n")
+                except Exception as e:
+                    print("Warning: Failed to enhance query with biodata personalization.")
+                    print(e)
                     pass
             
             # Use the single query function. get_answer also renders the streaming markdown and takes care of logging, so we need not do anything else here.

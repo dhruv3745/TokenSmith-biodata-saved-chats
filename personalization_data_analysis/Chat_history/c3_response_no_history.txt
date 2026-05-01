@@ -1,0 +1,7 @@
+The optimizer decides between a full table scan and an index range scan based on the selectivity of the predicate and the size of the table. If 
+the predicate is highly selective, meaning that only a small fraction of the rows in the table satisfy the predicate, then an index range scan  
+is likely to be more efficient than a full table scan. On the other hand, if the predicate is moderately selective, meaning that a significant  
+fraction of the rows in the table satisfy the predicate, then a full table scan may be more efficient than an index range scan. The optimizer   
+uses statistics about the table, such as the number of rows and the distribution of values in the table, to determine the selectivity of the    
+predicate and to make this decision. The specific criteria and mechanisms for this decision are complex and are described in the bibliographic  
+notes for this chapter.

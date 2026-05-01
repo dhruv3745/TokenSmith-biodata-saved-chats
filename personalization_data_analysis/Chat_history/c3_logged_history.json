@@ -1,0 +1,83 @@
+[
+    {
+        "metadata": {
+            "chat_id": "114b6eb0-35b1-4bef-9a71-0a6330c7ce4b",
+            "timestamp": "2026-04-30T01:46:56.161736Z",
+            "message_count": 6,
+            "exchange_count": 3,
+            "tier": "short"
+        },
+        "summary": {
+            "chat_focus": "Rule-based and cost-based optimization in modern optimizers",
+            "key_concepts": [
+                "Rule-based optimization",
+                "Cost-based optimization",
+                "Combination of both approaches"
+            ],
+            "user_interests": [
+                "Rule-based optimization",
+                "Cost-based optimization"
+            ],
+            "learning_progress": "The user understood the difference between rule-based and cost-based optimization approaches and the combination of both in modern optimizers.",
+            "summary": "Rule-based optimization relies on predefined rules and heuristics, while cost-based optimization uses precise cost models to evaluate different execution plans and choose the most efficient one. Modern optimizers typically use both approaches to provide a comprehensive and effective optimization strategy."
+        }
+    },
+    {
+        "metadata": {
+            "chat_id": "b2596c98-b294-41c6-a6a9-86058fcf4293",
+            "timestamp": "2026-04-30T01:48:16.344492Z",
+            "message_count": 6,
+            "exchange_count": 3,
+            "tier": "short"
+        },
+        "summary": {
+            "chat_focus": "Parsing failed",
+            "key_concepts": [],
+            "user_interests": [],
+            "learning_progress": "Unable to parse model output.",
+            "summary": "{\n  \"chat_focus\": \"Histograms, correlation, and optimization\",\n  \"key_concepts\": [\"Histograms\", \"Correlation\", \"Optimization\"],\n  \"user_interests\": [\"Histograms\", \"Correlation\"],\n  \"learning_progress\": \"The user understood the importance of histograms for single-column distributions and the limitati"
+        }
+    },
+    {
+        "metadata": {
+            "chat_id": "7dae7e12-9eb1-450a-b32e-e9b7ef242756",
+            "timestamp": "2026-04-30T01:50:39.950683Z",
+            "message_count": 6,
+            "exchange_count": 3,
+            "tier": "short"
+        },
+        "summary": {
+            "chat_focus": "Adaptive query execution and its challenges",
+            "key_concepts": [
+                "Adaptive query execution",
+                "Optimizer planning",
+                "Query execution",
+                "Statistics",
+                "Runtime overhead"
+            ],
+            "user_interests": [
+                "Adaptive techniques",
+                "Query optimization",
+                "System architecture"
+            ],
+            "learning_progress": "The user understood the concept of adaptive query execution and the tradeoff between adaptivity and runtime overhead.",
+            "summary": "Adaptive query execution is a technique that allows the system to adaptively choose a plan that performs well under changing query conditions. However, it introduces significant runtime overhead and debugging challenges. Most systems implement a limited number of adaptive points to balance the need for adaptivity with runtime efficiency."
+        }
+    },
+    {
+        "metadata": {
+            "chat_id": "95f50ace-dea3-4941-90fe-3a4672f28e4c",
+            "timestamp": "2026-04-30T01:51:17.022752Z",
+            "message_count": 2,
+            "exchange_count": 1,
+            "tier": "short"
+        },
+        "summary": {
+            "chat_focus": "Parsing failed",
+            "key_concepts": [],
+            "user_interests": [],
+            "learning_progress": "Unable to parse model output.",
+            "summary": "{\n  \"chat_focus\": \"Query optimization for a billion-row table with a moderately selective predicate\",\n  \"key_concepts\": [\"Index range scan\", \"Full table scan\", \"Query selectivity\", \"Index size and cost\", \"Index usage\", \"Cost of full table scan\", \"Index maintenance\", \"Query execution time\", \"Index tu"
+        }
+    }
+]

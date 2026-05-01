@@ -49,6 +49,11 @@ class RAGConfig:
     enable_history: bool = True
     max_history_turns: int = 3
     
+    
+    enable_history_personalization: bool = True
+    enable_biodata_personalization: bool = True
+    
+    
     # index parameters
     use_indexed_chunks: bool = False
     extracted_index_path: os.PathLike = "data/extracted_index.json"

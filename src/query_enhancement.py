@@ -4,7 +4,9 @@ Query enhancement techniques for improved retrieval (use only one):
 - Query Enrichment: LLM-based query expansion
 """
 
+import json
 import textwrap
+from pathlib import Path
 from typing import Optional
 from src.generator import ANSWER_END, ANSWER_START, run_llama_cpp, text_cleaning
 
@@ -251,6 +253,9 @@ def enhance_query_with_chat_history(
         """)
 
     prompt = text_cleaning(prompt)
+    
+    print("Prompt for Query Enhancement:")
+    print(prompt)
     output = run_llama_cpp(
         prompt,
         model_path,
@@ -258,12 +263,16 @@ def enhance_query_with_chat_history(
         temperature=0.1,
         **llm_kwargs,
     )
+    print("Raw LLM Output for Query Enhancement using Biodata:")
+    print(output)
 
     rewritten = output["choices"][0]["text"].strip()
 
     for prefix in ("rewritten query:", "query:"):
         if rewritten.lower().startswith(prefix):
             rewritten = rewritten[len(prefix):].strip()
+            
+    print(f"Enhanced Query: {rewritten}")
 
     if not rewritten or len(rewritten) > len(query) * 4:
         return query
@@ -288,7 +297,7 @@ def personalize_query(
     """
     path = Path(biodata_path)
     if not path.exists():
-        return {}
+        return query
 
     content = path.read_text(encoding="utf-8")
 
@@ -315,6 +324,7 @@ def personalize_query(
     personal_info = profile
 
     if not personal_info:
+        print("No personal information found in biodata.md for query personalization.")
         return query
 
     _EMPTY = {"unknown", "none", "n/a", "not mentioned", "not provided", ""}
@@ -369,6 +379,9 @@ def personalize_query(
         temperature=0.1,
         **llm_kwargs
     )
+    
+    print("Raw LLM Output for Query Enhancement using Biodata:")
+    print(output)
 
     rewritten = output["choices"][0]["text"].strip()
 

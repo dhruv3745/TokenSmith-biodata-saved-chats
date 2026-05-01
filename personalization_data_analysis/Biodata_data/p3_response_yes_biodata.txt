@@ -1,0 +1,22 @@
+Hash joins are a type of parallel join algorithm that uses hash tables to quickly match tuples from two relations based on a common key. They   
+are preferred over nested-loop and sort-merge joins for several reasons:                                                                        
+
+  1 Speed: Hash joins are generally faster than nested-loop and sort-merge joins because they do not require sorting or merging of tuples.      
+  2 Memory usage: Hash joins can use less memory than nested-loop and sort-merge joins because they do not need to store all tuples in memory.  
+  3 Scalability: Hash joins can scale better than nested-loop and sort-merge joins because they do not require a large amount of memory to store
+    all tuples.                                                                                                                                 
+  4 Parallelism: Hash joins can be easily parallelized, making them suitable for distributed systems.                                           
+  5 Flexibility: Hash joins can be used with any join condition, not just equality.                                                             
+  6 Performance: Hash joins can provide better performance for certain types of queries, such as those with large input sizes or those that     
+    require frequent updates.                                                                                                                   
+  7 Data locality: Hash joins can take advantage of data locality, which means that tuples are matched based on their location in memory, rather
+    than their location on disk.                                                                                                                
+  8 Cache efficiency: Hash joins can be more cache efficient than nested-loop and sort-merge joins because they do not require a large amount of
+    memory to store all tuples.                                                                                                                 
+  9 Memory usage: Hash joins can use less memory than nested-loop and sort-merge joins because they do not need to store all tuples in memory.  
+ 10 Scalability: Hash joins can scale better than nested-loop and sort-merge joins because they do not require a large amount of memory to store
+    all tuples.                                                                                                                                 
+ 11 Performance: Hash joins can provide better performance for certain types of queries, such as those with large input sizes or those that     
+    require frequent updates.                                                                                                                   
+ 12 Data locality: Hash joins can take advantage of data locality, which means that tuples are matched based on their location in memory, rather
+    than their location on   
